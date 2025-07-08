@@ -1,7 +1,7 @@
 :root {
    --color-primary: #008080;        /* Teal */
   --color-primary-dark: #004d4d; 
-  --color-sec: white /* darker shade */
+  --color-sec: white /* white */
 }
 
 *,
@@ -88,7 +88,7 @@ h1 {
 
 button {
   background-color: var(--color-primary-dark);
-  color: black;
+  color: var(--color-sec);
   padding: 10px;
   border: none;
   width: 150px;
