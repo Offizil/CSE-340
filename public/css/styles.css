@@ -3,4 +3,220 @@
 *:before,
 *:after {
   box-sizing: border-box;
+  font-family: "Arimo", sans-serif;
+  margin: 10px;
+}
+
+/* ---------------------Header-------------------- */
+#top-header {
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: teal;
+  color: beige;
+align-items: baseline;
+  margin-bottom: -10px;
+
+
+}
+
+
+
+.siteName a, 
+#tools a {
+text-decoration: none;
+color: beige;
+
+}
+
+.siteName a {
+  font-size: 2rem;
+
+}
+
+#tools a {
+    font-size: 1rem;
+
+}
+/* ------------------nav------------------------- */
+nav {
+  background-color: black;
+  color: beige;
+  padding: 5px;
+  margin-top: -10px;
+
+
+  
+}
+
+nav ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  list-style: none;
+  
+
+}
+
+
+
+
+/* -------------------index------------------ */
+
+h1 {
+  margin-top: 20px;
+}
+#hero {
+ background-image: url("../images/vehicles/delorean-tn.jpg");
+height: 700px;
+background-position: center;
+background-repeat: no-repeat;
+background-size: contain;
+background-size: 900px 400px;
+position: relative;
+}
+
+#hero-text {
+  margin-left: 20px;
+  margin-top: 80px;
+  width: 50%;
+  padding: 10%;
+  color: teal;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.8));
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+#dmc {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-left: -3px;
+
+  /* margin: -10px; */
+}
+
+button {
+  background-color: teal;
+  color: black;
+  padding: 20px;
+  border: none;
+  width: 200px;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+
+#gallery  {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  gap: 10px;
+}
+
+#gallery h2 {
+  margin-bottom: 40px;
+}
+
+#upgrades {
+  grid-area: 1/1/2/2;
+}
+
+#reviews{
+  grid-area: 1/2/2/3;
+}
+
+#reviews li {
+  font-size: 1.2rem;
+  /* color: red; */
+  margin-bottom: 30px;
+
+}
+
+#image-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr ;
+}
+
+.image-wrapper {
+  background-color: teal;
+  height: 100px;
+  text-align: center;
+
+}
+figcaption {
+  text-align: center;
+  color: teal;
+  text-decoration: underline;
+}
+
+
+
+/* ------------------footer--------------------- */
+footer {
+  background-color: teal;
+  color: beige;
+  font-size: 1.2rem;
+  padding: 20px;
+  text-align: center;
+  
+}
+
+.copyright {
+  margin: 0 auto;
+}
+
+
+@media only screen and (max-width: 700px) {
+  
+#gallery  {
+  display: block;
+}
+
+
+#hero {
+background-image: url("../images/vehicles/delorean-tn.jpg");
+height: 500px ;
+background-position: center;
+background-repeat: no-repeat;
+background-size: contain;
+}
+
+#hero-text {
+  display: inline-block;
+  white-space: nowrap;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.8));
+  margin-top: 80px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  /* margin-left: 20px; */
+  width: 60%;
+  color: teal;
+  font-size: 1rem;
+  font-weight: 500;
+
+ 
+}
+
+#dmc {
+  font-size: 1.5rem;
+  margin-left: -3px;
+  /* font-weight: 900; */
+  /* margin: -10px; */
+}
+
+button {
+  background-color: teal;
+  color: black;
+  padding: 10px;
+  border: none;
+  width: 150px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+
+
 }
