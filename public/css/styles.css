@@ -52,6 +52,11 @@ nav ul {
   justify-content: space-evenly;
   list-style: none;
 }
+nav a {
+  text-decoration: none;
+  color: var(--color-sec);
+}
+
 
 /* -------------------index------------------ */
 
@@ -141,6 +146,30 @@ footer {
   margin: 0 auto;
 }
 
+/* -----------details-page--------------- */
+.vehicle-detail-flex {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.vehicle-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.vehicle-info {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+
+
+
+
+
 /* ------------------Desktop Enhancements (min-width: 700px) --------------------- */
 @media only screen and (min-width: 700px) {
   #hero {
@@ -180,4 +209,48 @@ footer {
   #reviews {
     grid-area: 1/2/2/3;
   }
+
+  /* -------details page--------- */
+   .vehicle-detail-flex {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .vehicle-image, .vehicle-info {
+    flex: 1;
+  }
+
+  .vehicle-image {
+    padding-right: 1.5rem;
+  }
+/* --------------------------- */
 }
+
+
+
+
+/* -------------------------------- */
+#inv-display {
+  /* display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 2rem; */
+  color: black;
+  background-color: beige;
+  text-align: center;
+  list-style: none;
+
+
+}
+
+#inv-display a {
+  text-decoration: none;
+  color: black;
+}
+
+/* ---------------------DETAILS_----------________ */
+
+/* .vehicle-details {
+  background-color: fuchsia;
+  display: flex;
+  flex-direction: column;
+} */

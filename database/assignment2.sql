@@ -26,6 +26,6 @@ WHERE c.classification_name = 'Sport';
 
 -- Update image paths to include "/vehicles"
 UPDATE inventory
-SET 
+SET
     inv_image = REPLACE(inv_image, '/images/', '/images/vehicles/'),
     inv_thumbnail = REPLACE(inv_thumbnail, '/images/', '/images/vehicles/');
