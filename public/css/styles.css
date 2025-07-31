@@ -308,10 +308,69 @@ footer {
   color: black;
 }
 
-/* ---------------------DETAILS_----------________ */
+.notice {
+  color: #004d4d;
+  font-weight: bolder;
+}
 
-/* .vehicle-details {
-  background-color: fuchsia;
-  display: flex;
-  flex-direction: column;
-} */
+
+
+
+
+
+
+/* ---------------Login page ----------------------- */
+.login-container {
+  background-color: var(--color-sec);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 450px;
+  margin: 0 auto;
+}
+
+.login-container input[type="email"],
+.login-container input[type="password"],
+.login-container input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  box-sizing: border-box;
+      margin-bottom: 20px;
+
+
+}
+
+    .login-container button {
+      width: 100%;
+      padding: 10px;
+      background-color: var(--color-primary-dark);
+      color: var(--color-sec);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .login-container button:hover {
+      background-color: #45a049;
+    }
+
+    .register-link {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .register-link a {
+      color: var(--color-primary-dark);
+      text-decoration: underline;
+    }
+
+    .register-link a:hover {
+      font-weight: bolder;
+    }
+
+    .mustfill {
+      color: maroon;
+    }
+
+   

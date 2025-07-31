@@ -18,18 +18,59 @@ const utilities = require("./utilities/")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute") 
 
+// adding the Session package and DB connection
+const session = require("express-session")
+const pool = require('./database')
+
+// require the account route file
+const accountRoute = require("./routes/accountRoute")
+
+// Add body parser
+const bodyParser = require("body-parser")
+
+// add error route
+const errorRoute = require("./routes/errorRoute")
+
+
+
+
+/* ***********************
+ * Middleware
+ * ************************/
+app.use(session ({
+  store: new (require('connect-pg-simple')(session))({
+    createTableIfMissing: true,
+    pool,
+  }),
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  name: 'sessionId',
+}))
+
+// Express Messages Middleware
+app.use(require('connect-flash')())
+app.use(function(req, res, next){
+  res.locals.messages = require('express-messages') (req, res)
+  next()
+})
+
 /* ***********************
  * View Engine and Templates
  *************************/
 app.set("view engine", "ejs")
 app.use(expressLayouts)
 app.set("layout", "./layouts/layout") // not at views root
-// app.use(express.static('/public'));
+
+
+// make body parser available to the app
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true})) // for parsing application/x-www-form-urlencoded
 
 // me - here we go again - trial
-// Enable POST data parsing (for future forms)
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+// Enable POST data parsing (for future forms) - gpt advice
+// app.use(express.json())
+// app.use(express.urlencoded({ extended: true }))
 
 
 
@@ -44,10 +85,20 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 // Inventory routes
 app.use("/inv", inventoryRoute)
 
+// Account Routes
+app.use("/account", accountRoute)
+
+// add error route
+app.use("/error", errorRoute)
+
+
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry boys, we appear to have lost that page. Desole, Nous sommes tres perdu maintenant'})
 })
+
+
+
 
 
 
