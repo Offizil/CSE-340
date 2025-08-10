@@ -1,0 +1,25 @@
+<!-- view title as h1 -->
+<h1><%= title %></h1>
+<p><%- messages() %></p>
+
+
+<!-- form for adding a new classification -->
+<div class="classfxn-form">
+    <h3> Add new classification</h3>
+    <form id="add-classfxn" method="post" action="/inv/add-classification">
+        <div id="clsfxn-name-div">
+            <label for="classfxn-name">Classification Name<span class="mustfill">*</span></label>
+            <span>New classification name cannot contain a space or special character of any kind</span>
+            <input type="text" id="classfxn-name" name="classification_name" required value="<%= locals.classification_name %>" >
+        </div>
+        <button type="submit">Add Classifcication</button>
+
+    </form>
+</div>
+
+
+
+
+
+
+

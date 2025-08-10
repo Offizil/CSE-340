@@ -1,0 +1,58 @@
+<!-- view title as h1 -->
+<h1><%= title %></h1>
+
+
+
+<p><%- messages() %></p>
+
+
+
+<!-- form for adding a new inventory -->
+<div class="inv-form">
+    <h3> Add new inventory</h3>
+    <form id="add-inv" method="post" action="/inv/add-inventory" enctype="multipart/form-data"> <!-- enctype="multipart/form-data"-->
+        <label for="inv-make">Vehicle Make<span class="mustfill">*</span></label>
+        <input type="text" id="inv-make" name="inv_make" required value="<%= locals.inv_make %>" >
+    
+        <label for="inv-model">Model<span class="mustfill">*</span></label>
+        <input type="text" id="inv-model" name="inv_model" required value="<%= locals.inv_model %>" >
+        
+        <label for="inv-year">Year<span class="mustfill">*</span></label>
+        <input type="number" id="inv-year" name="inv_year" required min="1900" max="2099" value="<%= locals.inv_year %>" >
+
+        <label for="inv-desc">Description<span class="mustfill">*</span></label>
+        <input type="text" id="inv-desc" name="inv_description" required value="<%= locals.inv_description %>" >
+
+        <label for="inv-miles">Miles<span class="mustfill">*</span></label>
+        <input type="number" id="inv-miles" name="inv_miles" required value="<%= locals.inv_miles%>" >
+        
+
+        <!-- thumbnail -->
+        <label for="inv-thumb">Thumbnail<span class="mustfill">*</span></label>
+        <input type="file" id="inv-thumb" name="inv_thumbnail" accept="image/*" required>
+
+       
+
+        <!-- image -->
+        <label for="inv-image">Image<span class="mustfill">*</span></label>
+        <input type="file" id="inv-image" name="inv_image" accept="image/*" required>
+        
+       
+
+
+        <label for="inv-color">Color<span class="mustfill">*</span></label>
+        <input type="text" id="inv-color" name="inv_color" required value="<%= locals.inv_color %>" >
+        
+        <label for="inv-price">Price<span class="mustfill">*</span></label>
+        <input type="number" id="inv-price" name="inv_price" required value="<%= locals.inv_price %>" >
+
+        <label for="classificationList">Classification<span class="mustfill">*</span></label>
+        <%- locals.classificationList %>
+    
+        
+        <button type="submit">Add Inventory</button>
+
+    </form>
+</div>
+
+

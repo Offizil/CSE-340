@@ -1,7 +1,7 @@
 const errorController = {}
 
 errorController.IntError = async function(req, res ) {
-    throw new Error("Intentional error fortesting 500 errors. yayyy!")
+    throw new Error("Intentional error for testing 500 errors. yayyy!")
     
 }
 
