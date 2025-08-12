@@ -295,6 +295,13 @@ footer a {
     height: 100%;
   }
 
+  .account-update,
+  .change-password {
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+  }
+
+
 }
 
 
@@ -605,3 +612,92 @@ footer a {
 #inventoryDisplay a:hover {
   text-decoration: underline;
 }
+
+
+/* -----------account management -------------` */
+.account-container {
+  max-width: 1100px;
+  margin: 2rem auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* Page title */
+.account-container h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: var(--color-primary-dark);
+  border-bottom: 2px solid #eaeaea;
+  padding-bottom: 0.5rem;
+}
+
+/* Section headings */
+.account-section {
+  margin-top: 2rem;
+}
+
+.account-section h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-primary-dark);
+}
+
+/* ------- update-account page ---- */
+.acctUpdate-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.acctUpdate-form label {
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+}
+
+.acctUpdate-form input[type="text"],
+.acctUpdate-form input[type="email"],
+.acctUpdate-form input[type="password"] {
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.acctUpdate-form input[type="text"]:focus,
+.acctUpdate-form input[type="email"]:focus,
+.acctUpdate-form input[type="password"]:focus {
+  border-color: var(--color-primary-dark);
+  outline: none;
+}
+
+/* ====== Buttons ====== */
+.acctUpdate-form button {
+  padding: 0.75rem;
+  font-size: 1rem;
+  background-color: var(--color-primary-dark);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.acctUpdate-form button:hover {
+  background-color: var(--color-primary-dark);
+}
+
+
+.acctUpdate-form h1, 
+.acctUpdate-form h2 {
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.change-password p {
+  line-height: 1.5;
+  color: var(--color-primary);
+}
+ 

@@ -26,13 +26,6 @@ router.post("/registration",
 
 
 
-//Process the login attempt
-// router.post (
-//     "/login", 
-//     (req, res) => {
-//         res.status(200).send('Login process')
-//     }
-// )
 
 
 router.post (
@@ -47,8 +40,38 @@ router.post (
 router.get (
     "/",
     utilities.checkLogin,
-    utilities.handleErrors(accountController.buildAccount)
+    utilities.handleErrors(accountController.buildAccountManagement)
 )
+
+
+
+// // Get accout update form
+// router.get(
+//     "update/:account_id",
+//     utilities.checkLogin,
+//     accountController.buildAccountUpdateForm
+// )
+
+
+// account update routes. get Form, post password and details
+router.get("/update-account/:account_id", 
+    utilities.checkLogin, 
+    accountController.buildAccountUpdate,
+    // accountController.buildUpdateAccountForm
+     )
+
+    router.post("/update-info", 
+    utilities.checkLogin, 
+    accountController.updateAccountInfo)
+
+    router.post("/update-password", 
+    utilities.checkLogin, 
+    accountController.updatePassword)
+
+// logout route 
+router.get("/logout", 
+    utilities.checkLogin, 
+    accountController.logoutAccount);
 
 
 module.exports = router

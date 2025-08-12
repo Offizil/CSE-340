@@ -16,7 +16,7 @@ accountController.buildLogin =  async function (req, res, next) {
     let nav = await utilities.getNav()
     res.render("account/login", {
         title: "login",
-        message: "",
+        message: req.flash("notice"),
         nav,
         errors: null,
     })
@@ -106,6 +106,7 @@ accountController.accountLogin = async function(req, res) {
       nav,
       errors: null,
       account_email,
+      message: null
     })
     return
   }
@@ -134,17 +135,131 @@ accountController.accountLogin = async function(req, res) {
   }
 }
 
+// create the accout management page
+accountController.buildAccountManagement = async function(req, res, next) {
+const accountData = res.locals.accountData 
+  
+  try{
+    const nav = await utilities.getNav()
 
-accountController.buildAccount = async function(req, res) {
-  const nav = await utilities.getNav()
+    res.render('account/account-management', {
+      title: 'Account Management',
+      nav,
+      // message: req.flash("notice"),
+      errors: null,
 
-  res.render('account/account-management', {
-    title: 'Account Management',
-    nav,
-    messages: req.flash(),
-    errors: null,
-  });
+      account_firstname: accountData.account_firstname,
+      account_lastname: accountData.account_lastname,
+      account_type: accountData.account_type,
+      account_id: accountData.account_id,
+    });
+  } catch (error) {
+    next(error)
+  }
 };
+ 
+
+// create the account update form page
+// accountController.buildUpdateAccountForm = async function (req, res, next) {
+//   try {
+//   let nav = await utilities.getNav()
+
+//     const account_id = req.params.account_id
+//     const accountData = await accountModel.getAccountById(account_id)
+//     res.render("account/update-account", {
+//       nav,
+//       title: "Update Account",
+//       account: accountData,
+//       errors: null,
+//     })
+//   } catch (err) {
+//     next(err)
+//   }
+// }
+
+/* ************
+* build forms for account update form, 
+password and account details update
+* *************/
+// Render the account update view
+accountController.buildAccountUpdate = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  try {
+  const account_id = req.params.account_id
+  const accountData = await accountModel.getAccountById(account_id)
+  console.log(">>>>account data fetchec:", {accountData})
+  res.render("account/update-account", {
+    nav,
+    title: "Update Account",
+    account: accountData,
+    errors: null, 
+    message: req.flash("notice"),
+
+    account_firstname: accountData.account_firstname,
+    account_lastname: accountData.account_lastname,
+    account_email: accountData.account_email
+  })
+} catch (error) {
+  next(error)
+}
+}
+
+/* Update account info */
+accountController.updateAccountInfo = async function (req, res, next) {
+  
+  const { account_id, account_firstname, account_lastname, account_email } = req.body
+  const updateResult = await accountModel.updateAccountInfo(account_id, account_firstname, account_lastname, account_email)
+  
+  if (updateResult) {
+    req.flash("notice", "Account information updated successfully.")
+    res.redirect("/account/")
+
+ 
+}else {
+    req.flash("notice", "Update failed. Please try again.")
+    res.redirect(`/account/update-account/${account_id}`)
+  }
+
+}
+
+/* Update password */
+accountController.updatePassword = async function (req, res, next) {
+  const { account_id, account_password } = req.body;
+  
+  try {
+    const hashedPassword = await bcrypt.hash(account_password, 10)
+    const updateResult = await accountModel.updatePassword(account_id, hashedPassword)
+    
+    if (updateResult) {
+      req.flash("notice", "Password updated successfully.")
+      res.redirect(`/account/`)
+    } else {
+      req.flash("notice", "Password update failed. Please try again.")
+      res.redirect(`/account/update-account/${account_id}`)
+  }
+    // let nav = await utilities.getNav()
+    // const updatedAccountData = await accountModel.getAccountById(account_id)
+    // res.render("account/account-management",  {
+    //   title: "Account management",
+    //   accountData: updatedAccountData,
+    //   nav,
+    // }) 
+  } catch (error) {
+    req.flash("notice", "An error occured while updating the password.")
+    res.redirect("/account/update-account")
+  }
+}
+
+
+// logout process. 
+accountController.logoutAccount = async function(req, res) {
+  console.log(">>>>>Logout route hit")
+  res.clearCookie("jwt") // this line deletes the token cookie
+  req.flash("notice", "You've been logged out Boss")
+  return res.redirect("/")
+
+}
+
 
 
 module.exports = accountController

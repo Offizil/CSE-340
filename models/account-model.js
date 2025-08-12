@@ -44,4 +44,75 @@ async function getAccountByEmail(account_email) {
     
 }
 
-module.exports = {registerAccount, checkExistingEmail, getAccountByEmail}
+/* *********************************
+update account details and password
+*******************************/
+async function getAccountById(account_id) {
+//   return pool.query(
+//     `SELECT account_id, account_firstname, account_lastname, account_email, account_type 
+//      FROM account WHERE account_id = $1`,
+//     [account_id]
+//   ).then(result => result.rows[0]);
+
+    try {
+    const sql = "SELECT account_id, account_firstname, account_lastname, account_email FROM account WHERE account_id = $1"
+    const result = await pool.query(sql, [account_id])
+    return result.rows[0]
+  } catch (error) {
+    throw error
+  }
+}
+
+async function updateAccountInfo(account_id, firstname, lastname, email) {
+//   return pool.query(
+//     `UPDATE account
+//      SET account_firstname = $1, account_lastname = $2, account_email = $3
+//      WHERE account_id = $4`,
+//     [firstname, lastname, email, account_id]
+//   );
+    try {
+    const sql = `
+      UPDATE account
+      SET account_firstname = $1, account_lastname = $2, account_email = $3
+      WHERE account_id = $4
+      RETURNING *;
+    `
+    const result = await pool.query(sql, [firstname, lastname, email, account_id])
+    return result.rows[0]
+  } catch (error) {
+    throw error
+  }
+
+}
+
+async function updatePassword(account_id, hashedPassword) {
+//   return pool.query(
+//     `UPDATE account
+//      SET account_password = $1
+//      WHERE account_id = $2`,
+//     [hashedPassword, account_id]
+//   );
+  try {
+    const sql = `
+      UPDATE account
+      SET account_password = $1
+      WHERE account_id = $2
+      RETURNING *;
+    `
+    const result = await pool.query(sql, [hashedPassword, account_id])
+    return result.rows[0]
+  } catch (error) {
+    throw error
+  }
+
+}
+
+
+
+
+
+
+
+
+
+module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, getAccountById, updateAccountInfo, updatePassword}

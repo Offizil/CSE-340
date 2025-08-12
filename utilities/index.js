@@ -61,7 +61,7 @@ Util.buildClassificationGrid = async function(data){
 }
 
 
-//here we go 
+
 Util.buildVehicleDetail = async function (vehicle) {
   const price = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -152,6 +152,35 @@ Util.checkLogin = (req, res, next) => {
     return res.redirect("/account/login")
   }
 }
+
+// Task 1
+/* *************************
+ * Middleware to inject login state into all views
+ * *************************/
+Util.injectLoginStatus = (req, res, next) => {
+  // If JWT exists, verify it
+  if (req.cookies.jwt) {
+    jwt.verify(
+      req.cookies.jwt,
+      process.env.ACCESS_TOKEN_SECRET,
+      function (err, accountData) {
+        if (err) {
+          res.locals.loggedin = false
+          res.locals.accountData = null
+        } else {
+          res.locals.loggedin = true
+          res.locals.accountData = accountData
+        }
+        next()
+      }
+    )
+  } else {
+    res.locals.loggedin = false
+    res.locals.accountData = null
+    next()
+  }
+}
+
 
 
 

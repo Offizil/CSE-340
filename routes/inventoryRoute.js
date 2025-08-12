@@ -3,13 +3,15 @@ const express = require("express")
 const router = new express.Router() 
 const invController = require("../controllers/invController")
 const utilities = require("../utilities");
-const { addInventory, checkAddedInventory } = require("../utilities/account-validation");
-
+const { addInventory, checkAddedInventory } = require("../utilities/account-validation")
+const {newInventoryRules, checkUpdateData} = require("../utilities/inventory-validation")
+const checkAccountType = require("../utilities/checkAccountType")
 
 
 // multer setuppp, lets go
 const multer = require("multer")
-const path = require("path")
+const path = require("path");
+// const { checkUpdateData } = require("../utilities/inventory-validation");
 // Define where to store images
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -31,14 +33,17 @@ router.get("/type/:classificationId", utilities.handleErrors(invController.build
 
 //Route to build and deliver a specific inventory item detail view.
 router.get("/detail/:inv_id", 
-  utilities.handleErrors(invController.buildDetailView));
+  utilities.handleErrors(invController.buildDetailView))
 
 //Route to build an deliver an add-classification view
 router.post("/add-classification", 
+  checkAccountType,
   utilities.handleErrors(invController.addClassification))
 
 // get add inventory
-router.get("/add-inventory", utilities.handleErrors(async (req, res) => {
+router.get("/add-inventory", 
+  checkAccountType,
+  utilities.handleErrors(async (req, res) => {
   const nav = await utilities.getNav()
   const classificationList = await utilities.buildClassificationList()
   res.render("inventory/add-inventory", {
@@ -49,8 +54,10 @@ router.get("/add-inventory", utilities.handleErrors(async (req, res) => {
   })
 }))
 
-// get the add classfication
-router.get("/add-classification", utilities.handleErrors(async (req, res) => {
+// get the add-classfication
+router.get("/add-classification", 
+  checkAccountType,
+  utilities.handleErrors(async (req, res) => {
   const nav = await utilities.getNav()
   res.render("inventory/add-classification", {
     title: "Add Classification",
@@ -67,14 +74,16 @@ router.post(
     { name: "inv_image", maxCount: 1 },
     { name: "inv_thumbnail", maxCount: 1 }
   ]),
-
+  checkAccountType,
   addInventory(),                            // validation rules
   checkAddedInventory,                       // validate the result
   utilities.handleErrors(invController.addInventory) // run controller only if valid
 )
 
 // build acct management page
-router.get("/", utilities.handleErrors(invController.buildManagement))
+router.get("/", 
+  checkAccountType,
+  utilities.handleErrors(invController.buildManagement))
 
 
 // route for 
@@ -82,9 +91,40 @@ router.get("/getInventory/:classification_id",
   utilities.handleErrors(invController.getInventoryJSON)
 )
 
-// route to get to modify inventory items
-// router.get("/edit/",
-//   utilities.handleErrors(invController.xxxxxxxxxxx)
-// )
+// route to get to modify inventory items page
+router.get("/edit/:inv_id",
+  checkAccountType,
+  utilities.handleErrors(invController.editInventoryView)
+)
+
+
+// route to  handle the outgoing request  to modify inventory items
+router.post("/editInventoryView", 
+  checkAccountType,
+
+   upload.fields([
+    { name: "inv_image", maxCount: 1 },
+    { name: "inv_thumbnail", maxCount: 1 }
+  ]),
+
+  newInventoryRules(),
+  checkUpdateData,
+  utilities.handleErrors(invController.updateInventory)
+)
+
+// route to get delete inv items
+router.get("/delete/:inv_id",
+  checkAccountType,
+  utilities.handleErrors(invController.deleteInventoryItemView)
+)
+
+// route to handle dele einv items post request
+router.post("/delete-confirm", 
+  checkAccountType,
+
+  // newInventoryRules(),
+  // checkUpdateData,
+  utilities.handleErrors(invController.deleteInventory)
+)
 
 module.exports = router;

@@ -1,0 +1,39 @@
+<!-- view title as h1 -->
+<h1><%= title %></h1>
+
+
+
+<p><%- messages() %></p>
+
+
+
+<!-- form for Deleteing a new inventory -->
+<div class="inv-form">
+    <h3> Delete inventory</h3>
+    <p>Confirm that you want to delete this item - The delete is permanent.</p>
+
+    <form id="Delete-inv" method="post" action="/inv/delete-confirm" > <!-- enctype="multipart/form-data"-->
+        <label for="inv-make">Vehicle Make<span class="mustfill">*</span></label>
+        <input type="text" id="inv-make" name="inv_make" required value="<%= locals.inv_make %>" readonly >
+    
+        <label for="inv-model">Model<span class="mustfill">*</span></label>
+        <input type="text" id="inv-model" name="inv_model" required value="<%= locals.inv_model %>" readonly >
+        
+        <label for="inv-year">Year<span class="mustfill">*</span></label>
+        <input type="number" id="inv-year" name="inv_year" required min="1900" max="2099" value="<%= locals.inv_year %>"  readonly>
+          
+
+        <label for="inv-price">Price<span class="mustfill">*</span></label>
+        <input type="number" id="inv-price" name="inv_price" required value="<%= locals.inv_price %>" readonly>
+
+               
+        <button type="submit">Delete Vehicle</button>
+
+        
+
+        <input type="hidden" name="inv_id" value="<%= locals.inv_id || '' %>">
+
+    </form>
+</div>
+
+

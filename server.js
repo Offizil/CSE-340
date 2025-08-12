@@ -63,7 +63,8 @@ app.use(utilities.checkJWTToken)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-
+// Task 1 -- so that every route request has these variables - to acccess login status in every page
+app.use(utilities.injectLoginStatus)
 
 /* ***********************
  * View Engine and Templates
