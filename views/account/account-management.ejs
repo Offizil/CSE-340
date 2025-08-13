@@ -9,12 +9,16 @@
     <p>
       <a href="/account/update-account/<%= account_id %>">Update Account Information</a>
     </p>
+     <p>
+        <a href="/favorites/">View and Manage Favorites</a>
+      </p>
 
     <% if (account_type === "Employee" || account_type === "Admin") { %>
       <h3>Inventory Management</h3>
       <p>
         <a href="/inv/">Go to Inventory Management</a>
       </p>
+     
     <% } %>
 
   </div>

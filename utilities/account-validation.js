@@ -15,6 +15,7 @@ const validate = {}
         .trim()
         .escape()
         .notEmpty()
+        .withMessage("first name must be provided")
         .isLength({min:1})
         .withMessage("Please provide a first a first name."),
 
@@ -23,6 +24,7 @@ const validate = {}
         .trim()
         .escape()
         .notEmpty()
+        .withMessage("last name must be provided")
         .isLength({min:2})
         .withMessage("Please provide a last name."),
 
@@ -74,6 +76,7 @@ validate.checkRegData = async (req, res, next) => {
             account_firstname,
             account_lastname,
             account_email,
+            message: ""
         })
         return
     } 
@@ -133,9 +136,11 @@ validate.checkNewclassificationRules = () => {
         .escape()
         .notEmpty()
         .withMessage("classification name cannot be empty")
-        .isLength({min:1})
-        .withMessage("Please provide a first a first name."),
-
+        .matches(/^[a-zA-Z0-9]+$/)
+        .withMessage('Field cannot contain special characters.')
+        .isLength({min:3})
+        .withMessage("Classification name must contain more than 3 characters."),
+// express validator method to set validation rules such that input field cannot contain a special character
     ]
 }
 
@@ -145,17 +150,13 @@ validate.checkNewClassification = async (req, res, next) => {
     let errors = []
     errors = validationResult(req)
     if(!errors.isEmpty()) {
-        let nav = await utilities.getNav()
-        res.render("inventory/management", {
-            errors,
-            nav,
-            title: "Management",
-            classification_name,
-            messages: "Failed to add. Try again!"
-
-        })
-        return  
-    }
+        // let nav = await utilities.getNav()
+        req.flash("notice", "Failed to add new classification. Please try again!")
+        res.redirect("/inv")
+      
+    
+     return
+    } 
     next()
 
 }

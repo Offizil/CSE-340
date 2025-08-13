@@ -6,8 +6,8 @@ const utilities = require("../utilities");
 const { addInventory, checkAddedInventory } = require("../utilities/account-validation")
 const {newInventoryRules, checkUpdateData} = require("../utilities/inventory-validation")
 const checkAccountType = require("../utilities/checkAccountType")
-
-
+const acctValidate = require("../utilities/account-validation")
+const in_validate = require("../utilities/inventory-validation")
 // multer setuppp, lets go
 const multer = require("multer")
 const path = require("path");
@@ -28,16 +28,19 @@ const upload = multer({ storage: storage })
 
 
 // Route to build inventory by classification view
-router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
+router.get("/type/:classificationId", 
+  utilities.handleErrors(invController.buildByClassificationId));
 
 
 //Route to build and deliver a specific inventory item detail view.
 router.get("/detail/:inv_id", 
   utilities.handleErrors(invController.buildDetailView))
 
-//Route to build an deliver an add-classification view
+//Post route to add new classifciation process
 router.post("/add-classification", 
   checkAccountType,
+  acctValidate.checkNewclassificationRules(),
+  acctValidate.checkNewClassification,
   utilities.handleErrors(invController.addClassification))
 
 // get add inventory
@@ -57,6 +60,10 @@ router.get("/add-inventory",
 // get the add-classfication
 router.get("/add-classification", 
   checkAccountType,
+
+  // checkNewClassification,
+  // checkNewclassificationRules(),
+
   utilities.handleErrors(async (req, res) => {
   const nav = await utilities.getNav()
   res.render("inventory/add-classification", {
@@ -80,13 +87,13 @@ router.post(
   utilities.handleErrors(invController.addInventory) // run controller only if valid
 )
 
-// build acct management page
+// build inventory management page
 router.get("/", 
   checkAccountType,
   utilities.handleErrors(invController.buildManagement))
 
 
-// route for 
+// route for  --- Inventory by the Classification As JSON
 router.get("/getInventory/:classification_id",
   utilities.handleErrors(invController.getInventoryJSON)
 )
@@ -107,8 +114,8 @@ router.post("/editInventoryView",
     { name: "inv_thumbnail", maxCount: 1 }
   ]),
 
-  newInventoryRules(),
-  checkUpdateData,
+  in_validate.newInventoryRules(),
+  in_validate.checkUpdateData,
   utilities.handleErrors(invController.updateInventory)
 )
 

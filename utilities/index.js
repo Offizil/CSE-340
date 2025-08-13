@@ -2,6 +2,7 @@ const invModel = require("../models/inventory-model")
 const Util = {}
 const jwt = require("jsonwebtoken")
 require ("dotenv").config()
+// const isLoggedIn = 
 
 /* ************************
  * Constructs the nav HTML unordered list
@@ -70,6 +71,15 @@ Util.buildVehicleDetail = async function (vehicle) {
 
   const miles = new Intl.NumberFormat("en-US").format(vehicle.inv_miles);
 
+  // create favorites button and logic to display to only loggedin users
+  let favoritesButton = ""
+  if (Util.checkLogin) {
+    favoritesButton = `
+      <form method="POST" action="/favorites/add/${vehicle.inv_id}">
+          <button type="submit" class="save-favorite-btn">Add ⭐ to Favorites</button>
+      </form>`
+  }
+
   return `
   <div class="vehicle-detail-flex">
 
@@ -83,6 +93,10 @@ Util.buildVehicleDetail = async function (vehicle) {
       <p><strong>Miles:</strong> ${miles} miles</p>
       <p><strong>Description:</strong> ${vehicle.inv_description}</p>
       <p><strong>Color:</strong> ${vehicle.inv_color}</p>
+
+      ${favoritesButton}
+      
+    
     </div>
   </div>
   `;

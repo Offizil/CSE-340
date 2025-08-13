@@ -73,8 +73,9 @@ validate.checkAddedInventory = async (req, res, next) => {
 
     if(!errors.isEmpty()) {
         let nav = await utilities.getNav()
-         console.log(">>> checkAddedInventory: rendering form with errors") // here we go
-   
+        console.log(">>> checkAddedInventory: rendering form with errors") // here we go
+        // const notify = "some form fields were left empty"
+        // req.flash("notice", "some form fields were left empty")
         res.render("inventory/add-inventory", {
             errors,
             nav,
@@ -90,6 +91,7 @@ validate.checkAddedInventory = async (req, res, next) => {
             classification_id,
             inv_image,         // No file uploaded yet
             inv_thumbnail,
+            message: "some form fields were left empty"
 
         })
         return  
@@ -182,8 +184,8 @@ validate.checkUpdateData = async (req, res, next) => {
 
     if(!errors.isEmpty()) {
         let nav = await utilities.getNav()
-         console.log(">>> checkupdatedInventory: rendering form with validation errors") // here we go
-   
+        console.log(">>> checkupdatedInventory: rendering form with validation errors") // here we go
+        req.flash("notice", "Some fields were either invaliad or not provided. Please refill and try again")
         return res.render("inventory/editInventoryView", {
             errors: errors.array(),
             nav,
@@ -200,7 +202,7 @@ validate.checkUpdateData = async (req, res, next) => {
             inv_img,         // No file uploaded yet
             inv_thumb,
             inv_id, // also returnedn
-
+            message:""
         })
         return  
     } 

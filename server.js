@@ -24,6 +24,8 @@ const accountRoute = require("./routes/accountRoute")
 const bodyParser = require("body-parser")
 // add error route
 const errorRoute = require("./routes/errorRoute")
+// add favorites routes 
+const favoriteRoute = require("./routes/favoritesRoute")
 // require the cookie parser
 const cookierParser = require("cookie-parser")
 
@@ -66,6 +68,7 @@ app.use(express.urlencoded({ extended: true }))
 // Task 1 -- so that every route request has these variables - to acccess login status in every page
 app.use(utilities.injectLoginStatus)
 
+
 /* ***********************
  * View Engine and Templates
  *************************/
@@ -74,14 +77,9 @@ app.use(expressLayouts)
 app.set("layout", "./layouts/layout") // not at views root
 
 
-
 // make body parser available to the app
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true})) // for parsing application/x-www-form-urlencoded
-
-
-
-
 
 
 /* ***********************
@@ -89,28 +87,29 @@ app.use(bodyParser.urlencoded({extended: true})) // for parsing application/x-ww
  *************************/
 app.use(static) 
 
+
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome))
+
 
 // Inventory routes
 app.use("/inv", inventoryRoute)
 
+
 // Account Routes
 app.use("/account", accountRoute)
+
 
 // add error route
 app.use("/errors", errorRoute)
 
+// add favorites route
+app.use("/favorites", favoriteRoute)
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry boys, we appear to have lost that page. Desole!'})
 })
-
-
-
-
-
 
 
 /* ***********************
@@ -127,7 +126,6 @@ app.use(async (err, req, res, next) => {
     nav
   })
 })
-
 
 
 

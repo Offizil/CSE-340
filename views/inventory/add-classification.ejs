@@ -9,8 +9,8 @@
     <form id="add-classfxn" method="post" action="/inv/add-classification">
         <div id="clsfxn-name-div">
             <label for="classfxn-name">Classification Name<span class="mustfill">*</span></label>
-            <span>New classification name cannot contain a space or special character of any kind</span>
-            <input type="text" id="classfxn-name" name="classification_name" required value="<%= locals.classification_name %>" >
+            <span>New classification name cannot contain a space or special character of any kind and must be at least 3 characters long</span>
+            <input type="text" id="classfxn-name" name="classification_name" required value="<%= locals.classification_name %>" pattern="[a-zA-Z0-9]{3,}">
         </div>
         <button type="submit">Add Classifcication</button>
 

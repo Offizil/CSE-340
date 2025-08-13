@@ -43,6 +43,7 @@ invCont.buildDetailView =  async function (req, res, next) {
       nav: await utilities.getNav(),
       vehicleDetail: vehicleDetailHTML,
       errors:null,
+      message: null,
     })
   } catch (error) {
     console.error("Error loading vehicle detail:", error)
@@ -202,6 +203,7 @@ invCont.editInventoryView = async function (req, res, next) {
   res.render("./inventory/editInventoryView", {
     title: "Edit " + itemName,
     nav,
+    message:"",
     classificationSelect: classificationSelect,
     errors: null,
     inv_id: itemData.inv_id,

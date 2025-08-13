@@ -255,7 +255,7 @@ accountController.updatePassword = async function (req, res, next) {
 accountController.logoutAccount = async function(req, res) {
   console.log(">>>>>Logout route hit")
   res.clearCookie("jwt") // this line deletes the token cookie
-  req.flash("notice", "You've been logged out Boss")
+  req.flash("notice", `You've been logged out.`)
   return res.redirect("/")
 
 }
